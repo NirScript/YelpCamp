@@ -17,6 +17,7 @@ var commentRoutes    = require("./routes/comments"),
     indexRoutes      = require("./routes/index")
     
 /* mongoose.connect("mongodb://localhost/yelp_camp_v11"); */
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v11";
 mongoose.connect(process.env.DATABASEURL);
 
 
