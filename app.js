@@ -48,6 +48,6 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
-app.listen(3000, function(){
-   console.log("Server is online");
-});
+app.listen(process.env.PORT || 3000, function() {
+    console.log("listening on 3000");
+  });
