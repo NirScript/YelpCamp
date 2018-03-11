@@ -16,9 +16,9 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index")
     
-/* mongoose.connect("mongodb://localhost/yelp_camp_v11"); */
-var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v11";
-mongoose.connect(process.env.DATABASEURL);
+mongoose.connect("mongodb://localhost/yelp_camp_v11Deploy"); 
+/* var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v11";
+ mongoose.connect(process.env.DATABASEURL);  */
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-// seedDB(); //seed the database
+ // seedDB(); //seed the database
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -53,5 +53,5 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 
 app.listen(process.env.PORT || 3000, function() {
-    console.log("listening on 3000");
+    console.log("listening on port 3000");
   });

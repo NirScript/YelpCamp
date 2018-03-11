@@ -4,14 +4,14 @@ var Campground = require("../models/campground");
 var middleware = require("../middleware");
 
 
-//INDEX
+//INDEX ROUTE
 router.get("/", function(req, res){
-    //get the camps from the db
+    // Get all camps from db
     Campground.find({}, function(err, allCampgrounds){
        if(err){
            console.log(err);
        } else {
-          res.render("campgrounds/index",{campgrounds:allCampgrounds});
+          res.render("campgrounds/index",{campgrounds: allCampgrounds, page: 'campgrounds'});
        }
     });
 });
@@ -49,8 +49,9 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 router.get("/:id", function(req, res){
     //find the campground with provided ID
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
-        if(err){
-            console.log(err);
+        if(err || !foundCampground){
+            req.flash("error", "campground not found");
+            res.redirect("/campgrounds");
         } else {
             console.log(foundCampground)
             //render show template with that campground
