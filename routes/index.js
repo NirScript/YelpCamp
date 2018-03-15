@@ -15,6 +15,24 @@ router.get("/register", function(req, res){
 
 //handle sign up logic
 router.post("/register", function(req, res){
+    const captcha = req.body["g-recaptcha-response"];
+    if (!captcha) {
+      console.log(req.body);
+      req.flash("error", "Please select captcha");
+      return res.redirect("/register");
+    }
+    // secret key
+    var secretKey = process.env.CAPTCHA;
+    // Verify URL
+    var verifyURL = "https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${captcha}&remoteip=${req.connection.remoteAddress}";
+    // Make request to Verify URL
+    request.get(verifyURL, (err, response, body) => {
+      // if not successful
+      if (body.success !== undefined && !body.success) {
+        req.flash("error", "Captcha Failed");
+        return res.redirect("/register");
+      }
+
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
@@ -26,7 +44,7 @@ router.post("/register", function(req, res){
            res.redirect("/campgrounds"); 
         });
     });
-});
+}); });
 
 //show login form
 router.get("/login", function(req, res){
