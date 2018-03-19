@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var Campground = require("./models/campground");
 var Comment   = require("./models/comment");
 
+//the data that is going to be added to the db
 var data = [
     {
         name: "Cloud's Rest", 
@@ -43,6 +44,7 @@ function seedDB(){
                             if(err){
                                 console.log(err);
                             } else {
+                                //save the comment
                                 campground.comments.push(comment._id);
                                 campground.save();
                                 console.log("Created new comment");

@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 
+//camp schema(name,description,price,googlemaps,comments etc)
 var campgroundSchema = new mongoose.Schema({
    name: String,
    price: String,

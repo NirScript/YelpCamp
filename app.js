@@ -17,7 +17,7 @@ var commentRoutes    = require("./routes/comments"),
     indexRoutes      = require("./routes/index")
     
 mongoose.connect("mongodb://localhost/yelp_camp_v11Deploy"); 
-/* var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v11"; //heroku stuff
+/* var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp_v11"; //heroku url for mongo
  mongoose.connect(process.env.DATABASEURL);  */
 
 
@@ -35,11 +35,14 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// *
 
 app.use(function(req, res, next){
    res.locals.currentUser = req.user;

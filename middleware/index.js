@@ -4,6 +4,7 @@ var Comment = require("../models/comment");
 // all the middleware goes here
 var middlewareObj = {};
 
+//campground ownership middleware
 middlewareObj.checkCampgroundOwnership = function(req, res, next) {
  if(req.isAuthenticated()){
         Campground.findById(req.params.id, function(err, foundCampground){
@@ -12,7 +13,7 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next) {
                res.redirect("back");
            }  else {
                // does the campground belong to the user?
-            if(foundCampground.author.id.equals(req.user._id)) {
+            if(foundCampground.author.id.equals(req.user._id || req.user.isAdmin)) {
                 next();
             } else {
                 req.flash("error", "You dont have permission to do that");
@@ -25,7 +26,7 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next) {
         res.redirect("back");
     }
 }
-
+//comment ownership middleware
 middlewareObj.checkCommentOwnership = function(req, res, next) {
  if(req.isAuthenticated()){
         Comment.findById(req.params.comment_id, function(err, foundComment){
@@ -34,7 +35,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
                res.redirect("back");
            }  else {
                // does the comment belong to the user?
-            if(foundComment.author.id.equals(req.user._id)) {
+            if(foundComment.author.id.equals(req.user._id || req.user.isAdmin)) {
                 next();
             } else {
                 req.flash("error", "You dont have permission to do that");
@@ -48,6 +49,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
     }
 }
 
+//logged in middleware(if user not logged in > redirect to login page)
 middlewareObj.isLoggedIn = function(req, res, next){
     if(req.isAuthenticated()){
         return next();
