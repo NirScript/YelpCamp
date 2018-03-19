@@ -22,7 +22,7 @@ mongoose.connect("mongodb://localhost/yelp_camp_v11Deploy");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine", "ejs");
+app.set("view engine", "ejs"); //use ejs
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
@@ -55,7 +55,7 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-//listen to localhost 3000 or to heroku or c9
+//listen to localhost 3000 or to heroku/c9 urls
 app.listen(process.env.PORT || 3000, function() {
     console.log("listening on port 3000");
   });

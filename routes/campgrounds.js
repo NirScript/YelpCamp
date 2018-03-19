@@ -14,6 +14,7 @@ var options = {
 var geocoder = NodeGeocoder(options);
 //INDEX ROUTE
 router.get("/", function(req, res){
+    //fuzzy search logic
     var noMatch = null;
     if(req.query.search){
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -50,7 +51,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         id: req.user._id,
         username: req.user.username
     }
-
+    //google maps location
     geocoder.geocode(req.body.location, function (err, data) {
         if (err || !data.length) {
           req.flash('error', 'Invalid address');
@@ -101,6 +102,7 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
 
 // UPDATE ROUTE
 router.put("/:id",middleware.checkCampgroundOwnership, function(req, res){
+    //update google maps location
     geocoder.geocode(req.body.location, function (err, data) {
         if (err || !data.length) {
           req.flash("error", "Invalid address");
@@ -124,6 +126,7 @@ router.put("/:id",middleware.checkCampgroundOwnership, function(req, res){
 
 // DESTROY ROUTE
 router.delete("/:id",middleware.checkCampgroundOwnership, function(req, res){
+    //find the camp ID and remove from db
    Campground.findByIdAndRemove(req.params.id, function(err){
       if(err){
           res.redirect("/campgrounds");
