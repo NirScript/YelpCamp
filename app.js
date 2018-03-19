@@ -55,7 +55,7 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-
+//listen to localhost 3000 or to heroku or c9
 app.listen(process.env.PORT || 3000, function() {
     console.log("listening on port 3000");
   });
