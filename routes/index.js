@@ -6,8 +6,8 @@ var User = require("../models/user");
 //root route
 router.get("/", function(req, res){
     res.render("landing");
+    console.log("process.env.GEOCODER_API_KEY is " + process.env.GEOCODER_API_KEY); 
 });
-
 // show register form
 router.get("/register", function(req, res){
     res.render("register", {page: "register"}); 
