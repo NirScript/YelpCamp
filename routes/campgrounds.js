@@ -50,6 +50,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         id: req.user._id,
         username: req.user.username
     }
+    //geocode code safsaffafsafasfsafsaafsafsafsafasfsafafsafsafasfsafsafasfasfasfa
     geocoder.geocode(req.body.location, function (err, data) {
         if (err || !data.length) {
           req.flash('error', 'Invalid address');
